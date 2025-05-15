@@ -1,0 +1,17 @@
+public interface NotificadorFactory {
+    Notificador criarNotificador();
+}
+
+public class EmailNotificadorFactory implements NotificadorFactory {
+    @Override
+    public Notificador criarNotificador() {
+        return new EmailNotificador();
+    }
+}
+
+public class LogNotificadorFactory implements NotificadorFactory {
+    @Override
+    public Notificador criarNotificador() {
+        return new LogNotificador();
+    }
+}

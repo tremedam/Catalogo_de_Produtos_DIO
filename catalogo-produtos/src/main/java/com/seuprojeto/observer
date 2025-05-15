@@ -1,0 +1,29 @@
+public interface ObservadorProduto {
+    void notificar(Produto produto);
+}
+
+public class EmailNotificador implements ObservadorProduto {
+    public void notificar(Produto produto) {
+        System.out.println("Email enviado sobre o novo produto: " + produto.getNome());
+    }
+}
+
+public class LogNotificador implements ObservadorProduto {
+    public void notificar(Produto produto) {
+        System.out.println("Log: Novo produto cadastrado - " + produto.getNome());
+    }
+}
+
+public class NotificadorManager {
+    private List<ObservadorProduto> observadores = new ArrayList<>();
+
+    public void adicionarObservador(ObservadorProduto observador) {
+        observadores.add(observador);
+    }
+
+    public void notificarObservadores(Produto produto) {
+        for (ObservadorProduto observador : observadores) {
+            observador.notificar(produto);
+        }
+    }
+}

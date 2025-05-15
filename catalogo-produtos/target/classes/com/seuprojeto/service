@@ -1,0 +1,48 @@
+package com.seuprojeto.service;
+
+import com.seuprojeto.model.Produto;
+import com.seuprojeto.repository.ProdutoRepository;
+import com.seuprojeto.strategy.DescontoStrategy;
+import com.seuprojeto.observer.ObservadorProduto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class ProdutoService {
+
+    private final ProdutoRepository produtoRepository;
+    private final List<ObservadorProduto> observadores = new ArrayList<>();
+
+    @Autowired
+    public ProdutoService(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
+
+    public Produto cadastrarProduto(Produto produto) {
+        Produto produtoSalvo = produtoRepository.save(produto);
+        notificarObservadores(produtoSalvo);
+        return produtoSalvo;
+    }
+
+    public List<Produto> listarProdutos() {
+        return produtoRepository.findAll();
+    }
+
+    public BigDecimal aplicarDesconto(Produto produto, DescontoStrategy descontoStrategy) {
+        return descontoStrategy.calcular(produto.getPreco());
+    }
+
+    public void adicionarObservador(ObservadorProduto observador) {
+        observadores.add(observador);
+    }
+
+    private void notificarObservadores(Produto produto) {
+        for (ObservadorProduto observador : observadores) {
+            observador.notificar(produto);
+        }
+    }
+}
