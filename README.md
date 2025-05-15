@@ -29,7 +29,6 @@ src
 │   │       └── seuprojeto
 │   │           ├── CatalogoProdutosApplication.java       # Aplicação para Run
 │   │           ├── controller        # Controladores para gerenciar requisições HTTP
-
 │   │           ├── service           # Classes de serviço com lógica de negócios
 │   │           ├── model             # Classes de modelo representando a estrutura de dados
 │   │           ├── repository         # Interfaces de repositório para acesso a dados
